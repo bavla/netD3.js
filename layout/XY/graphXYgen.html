@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+<!-- script src="./graphA.js"></script -->
+<script src="./graphB.js"></script>
+<!-- script src="./classS.js"></script -->
+<script src="./drawNet.js"></script>
+<script src="./d3/d3.js"></script>
+<!-- script src="http://d3js.org/d3.v3.min.js"></script -->
+<script>
+var
+s = graph.info.org,
+width = graph.style.canvas.width,
+height = graph.style.canvas.height;
+var lw = 1;
+if ( typeof graph.style !== 'undefined' && graph.style) {
+  if ( typeof graph.style.link !== 'undefined' && graph.style.link ) {
+    if ( typeof graph.style.link.width !== 'undefined' && graph.style.link.width ) {
+      var lw = graph.style.link.width
+} } };
+if(graph.netJSON=='general') {
+  var OK = drawNet(graph.persons.data,graph.friend.data)
+} else {
+  var OK = drawNet(graph.nodes,graph.links)
+}
+</script>
+</body>
