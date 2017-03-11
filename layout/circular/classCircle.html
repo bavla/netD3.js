@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- script src="./graph.js"></script -->
+<!-- script src="http://d3js.org/d3.v3.min.js"></script -->
+<script src="./class.js"></script>
+<script src="./d3/d3.js"></script>
+</head>
+<body>
+<script>
+var s = graph.info.org;
+// set up the drawing area
+var width = 500,
+  height = 500;
+var svg = d3.select("body").append("svg")
+  .attr("width", width)
+  .attr("height", height)
+  .attr("xmlns", "http://www.w3.org/2000/svg");
+// angle and radius for layout assistance
+var ang = 2 * Math.PI / graph.nodes.length;
+var rad = width / 2.5;
+// create the links
+var link = svg.selectAll("line")
+  .data(graph.links).enter().append("line")
+  .style("stroke", "blue")
+  .attr("stroke-width", 2)
+  .attr("x1", function(d) {return(rad * Math.cos((d.source-s)*ang)+.5*width);})
+  .attr("y1", function(d) {return(rad * Math.sin((d.source-s)*ang)+.5*width);})
+  .attr("x2", function(d) {return(rad * Math.cos((d.target-s)*ang)+.5*width);})
+  .attr("y2", function(d) {return(rad * Math.sin((d.target-s)*ang)+.5*width);});
+// create the nodes and set out in a circular layout
+var node = svg.selectAll("circle")
+  .data(graph.nodes).enter().append("circle")
+  .attr("r", 10)
+  .attr("cx", function(d,i) {return(rad * Math.cos(i*ang)+.5*width);})
+  .attr("cy", function(d,i) {return(rad * Math.sin(i*ang)+.5*width);})
+  .attr("fill", "yellow")
+  .attr("stroke", "red");
+</script>
+</body>
