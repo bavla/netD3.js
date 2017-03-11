@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<title>Load JSON file from server</title>
+<!-- http://eureka.ykyuen.info/2013/09/25/jquery-javascript-read-json-files-on-server/ -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+<select id="data">
+  <option value="graph.json">graph.json</option>
+  <option value="class.json">class.json</option>
+</select>
+<button id="btn">Read</button>
+<script>
+function process(graph) {
+// set up the drawing area
+var width = 500,
+  height = 500; s = graph.attributes.org;
+var svg = d3.select("body").append("svg")
+  .attr("width", width)
+  .attr("height", height)
+  .attr("xmlns", "http://www.w3.org/2000/svg");
+// draw the links
+var link = svg.selectAll("line")
+  .data(graph.links).enter().append("line")
+  .style("stroke", function(d,i) {return((d.type=="arc" ? "magenta" : "blue"))})
+  .attr("stroke-width", 2)
+  .attr("x1", function(d) {return(graph.nodes[d.source-s].x*width);})
+  .attr("y1", function(d) {return(graph.nodes[d.source-s].y*height);})
+  .attr("x2", function(d) {return(graph.nodes[d.target-s].x*width);})
+  .attr("y2", function(d) {return(graph.nodes[d.target-s].y*height);});
+// draw the nodes
+var node = svg.selectAll("circle")
+  .data(graph.nodes).enter().append("circle")
+  .attr("r", 15)
+  .attr("cx", function(d,i) {return(d.x*width);})
+  .attr("cy", function(d,i) {return(d.y*height);})
+  .attr("fill", "yellow")
+  .attr("stroke", "red");
+}
+
+$("#btn").click(function(){
+  $.getJSON($("#data").val(), function(json) {process(json);});
+});
+</script>
+</body>
+

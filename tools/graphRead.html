@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<!-- script src="http://d3js.org/d3.v3.min.js"></script -->
+<script src="./d3/d3.js"></script>
+</head>
+<body>
+<input type='file' accept='application/json' onchange='openFile(event)'>
+<script>
+function process(graph) {
+// set up the drawing area
+var width = 500,
+  height = 500; s = graph.info.org;
+var svg = d3.select("body").append("svg")
+  .attr("width", width)
+  .attr("height", height)
+  .attr("xmlns", "http://www.w3.org/2000/svg");
+// draw the links
+var link = svg.selectAll("line")
+  .data(graph.links).enter().append("line")
+  .style("stroke", function(d,i) {return((d.type=="arc" ? "magenta" : "blue"))})
+  .attr("stroke-width", 2)
+  .attr("x1", function(d) {return(graph.nodes[d.source-s].x*width);})
+  .attr("y1", function(d) {return(graph.nodes[d.source-s].y*height);})
+  .attr("x2", function(d) {return(graph.nodes[d.target-s].x*width);})
+  .attr("y2", function(d) {return(graph.nodes[d.target-s].y*height);});
+// draw the nodes
+var node = svg.selectAll("circle")
+  .data(graph.nodes).enter().append("circle")
+  .attr("r", 15)
+  .attr("cx", function(d,i) {return(d.x*width);})
+  .attr("cy", function(d,i) {return(d.y*height);})
+  .attr("fill", "yellow")
+  .attr("stroke", "red");
+}
+
+var openFile = function(event) {
+  var input = event.target;
+  var reader = new FileReader();
+  reader.onload = function(){
+    process(JSON.parse(reader.result));
+  };
+  reader.readAsText(input.files[0]);
+};
+</script>
+</body>
+
