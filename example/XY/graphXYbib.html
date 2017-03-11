@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+<!-- script src="./graphA.js"></script -->
+<!-- script src="./graphB.js"></script -->
+<script src="./bib.js"></script>
+<script src="./drawNetBib.js"></script>
+<script src="./d3/d3.js"></script>
+<!-- script src="http://d3js.org/d3.v3.min.js"></script -->
+<script>
+s = graph.info.org;
+if(graph.mode=='general') {
+  var OK = drawNet(graph.persons.data,graph.friend.data)
+} else {
+  var OK = drawNet(graph.nodes,graph.links)
+}
+</script>
+</body>
